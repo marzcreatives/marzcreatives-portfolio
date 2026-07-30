@@ -1,0 +1,20 @@
+{
+  "author": {
+    "name": "Maryam Islam",
+    "email": "mislam.creatives@gmail.com"
+  },
+  "scripts": {
+    "dev": "vite --host localhost --port 4173",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "lil-gui": "^0.21.0",
+    "three": "^0.185.1",
+    "three-stdlib": "^2.36.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.6",
+    "vite": "^6.4.3"
+  }
+}
