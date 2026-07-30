@@ -1,17 +1,18 @@
 import * as THREE from "three";
-// import { displayPaintingInfo, hidePaintingInfo } from "../modules/paintingInfo.js";
 import { updateMovement } from "./movement.js";
+import { getCatModel, updateCatAnimation } from "./cat.js";
 
 export const setupRendering = (
   scene,
   camera,
   renderer,
-  // paintings,
   controls,
   walls,
-  composer
+  composer,
 ) => {
-  const clock = new THREE.Timer();
+  const clock = new THREE.Clock();
+  const frustum = new THREE.Frustum();
+  const projScreenMatrix = new THREE.Matrix4();
 
   let render = function () {
     const delta = clock.getDelta();
@@ -20,25 +21,24 @@ export const setupRendering = (
 
     const distanceThreshold = 8;
 
-    // let paintingToShow;
-    // paintings.forEach((painting) => {
-    //   const distanceToPainting = camera.position.distanceTo(painting.position);
-    //   if (distanceToPainting < distanceThreshold) {
-    //     paintingToShow = painting;
-    //   }
-    // });
+    const cat = getCatModel();
 
-    // if (paintingToShow) {
-    //   // if there is a painting to show
-    //   displayPaintingInfo(paintingToShow.userData.info);
-    // } else {
-    //   hidePaintingInfo();
-    // }
+    if (cat) {
+      camera.updateMatrixWorld();
 
+      projScreenMatrix.multiplyMatrices(
+        camera.projectionMatrix,
+        camera.matrixWorldInverse,
+      );
+
+      frustum.setFromProjectionMatrix(projScreenMatrix);
+
+      if (frustum.intersectsObject(cat)) {
+        updateCatAnimation(delta);
+      }
+    }
     renderer.gammaOutput = true;
     renderer.gammaFactor = 2.2;
-
-    // renderer.render(scene, camera);
     composer.render();
     requestAnimationFrame(render);
   };

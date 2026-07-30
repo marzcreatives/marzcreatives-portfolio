@@ -11,12 +11,12 @@ export const setupEventListeners = (controls, camera, scene) => {
   document.addEventListener(
     "keydown",
     (event) => onKeyDown(event, controls),
-    false
+    false,
   );
   document.addEventListener(
     "keyup",
     (event) => onKeyUp(event, controls),
-    false
+    false,
   );
 
   controls.addEventListener("unlock", () => {
@@ -43,13 +43,14 @@ function togglePointerLock(controls) {
 }
 
 function onKeyDown(event, controls) {
+  const key = event.key.toLowerCase();
   // event is the event object that has the key property
-  if (event.key in keysPressed) {
+  if (key in keysPressed) {
     // check if the key pressed by the user is in the keysPressed object
-    keysPressed[event.key] = true; // if yes, set the value of the key pressed to true
+    keysPressed[key] = true; // if yes, set the value of the key pressed to true
   }
 
-  if (event.key === "Escape") {
+  if (key === "e scape") {
     // if the "ESC" key is pressed
     showMenu(); // show the menu
     showMenuOnUnlock = true;
@@ -57,21 +58,21 @@ function onKeyDown(event, controls) {
     lockPointer = false;
   }
 
-  if (event.key === "p") {
+  if (key === "p") {
     // if the "SPACE" key is pressed
     controls.unlock(); // unlock the pointer
     lockPointer = false;
   }
 
   // if key prssed is enter or return for mac
-  if (event.key === "Enter" || event.key === "Return") {
+  if (key === "enter" || key === "return") {
     // if the "ENTER" key is pressed
     hideMenu(); // hide the menu
     controls.lock(); // lock the pointer
     lockPointer = true;
   }
 
-  if (event.key === " ") {
+  if (key === " ") {
     // if the "p" key is pressed
     togglePointerLock(controls); // toggle the pointer lock
   }
@@ -94,7 +95,7 @@ function onKeyDown(event, controls) {
     lockPointer = false;
   }
 
-  if (event.key === "r") {
+  if (key === "r") {
     // if the "r" key is pressed
     location.reload(); // reload the page
   }
@@ -102,8 +103,9 @@ function onKeyDown(event, controls) {
 
 function onKeyUp(event, controls) {
   // same but for keyup
-  if (event.key in keysPressed) {
-    keysPressed[event.key] = false; // set to false when the key is released
+  const key = event.key.toLowerCase();
+  if (key in keysPressed) {
+    keysPressed[key] = false; // set to false when the key is released
   }
 }
 

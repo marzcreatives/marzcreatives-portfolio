@@ -1,7 +1,6 @@
 import * as THREE from "three";
 
 export const setupLighting = (scene) => {
-
   // Ambient light (moderate intensity)
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
   scene.add(ambientLight);
@@ -10,6 +9,10 @@ export const setupLighting = (scene) => {
   const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
   hemiLight.position.set(0, 20, 0);
   scene.add(hemiLight);
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  directionalLight.position.set(10, 20, 10);
+  scene.add(directionalLight);
 
   function createSpotlight(x, y, z, intensity, targetPosition) {
     const spotlight = new THREE.SpotLight(0xffffff, intensity);
@@ -39,7 +42,7 @@ export const setupLighting = (scene) => {
     6.7,
     -13,
     0.948,
-    new THREE.Vector3(0, 0, -20)
+    new THREE.Vector3(0, 0, -20),
   );
 
   const backWallSpotlight = createSpotlight(
@@ -47,7 +50,7 @@ export const setupLighting = (scene) => {
     6.7,
     13,
     0.948,
-    new THREE.Vector3(0, 0, 20)
+    new THREE.Vector3(0, 0, 20),
   );
 
   const leftWallSpotlight = createSpotlight(
@@ -55,7 +58,7 @@ export const setupLighting = (scene) => {
     6.7,
     0,
     0.948,
-    new THREE.Vector3(-20, 0, 0)
+    new THREE.Vector3(-20, 0, 0),
   );
 
   const rightWallSpotlight = createSpotlight(
@@ -63,7 +66,7 @@ export const setupLighting = (scene) => {
     6.7,
     0,
     0.948,
-    new THREE.Vector3(20, 0, 0)
+    new THREE.Vector3(20, 0, 0),
   );
 
   // Return created lights in case caller wants to tweak them
