@@ -2,6 +2,8 @@ import * as THREE from "three";
 import { updateMovement } from "./movement.js";
 import { getCatModel, updateCatAnimation } from "./cat.js";
 
+export const globalUniforms = { uTime: { value: 0 } };
+
 export const setupRendering = (
   scene,
   camera,
@@ -37,6 +39,9 @@ export const setupRendering = (
         updateCatAnimation(delta);
       }
     }
+
+    globalUniforms.uTime.value = clock.getElapsedTime();
+
     renderer.gammaOutput = true;
     renderer.gammaFactor = 2.2;
     composer.render();

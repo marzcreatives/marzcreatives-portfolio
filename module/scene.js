@@ -1,9 +1,9 @@
 import * as THREE from "three";
 import { PointerLockControls } from "three-stdlib";
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass.js';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass.js";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 
 export const scene = new THREE.Scene(); // create a scene
 let camera;
@@ -17,15 +17,15 @@ export const setupScene = () => {
     60, // fov = field of view
     window.innerWidth / window.innerHeight, // aspect ratio
     0.1, // near clipping plane
-    1000 // far clipping plane
+    1000, // far clipping plane
   );
   scene.add(camera); // add the camera to the scene
   camera.position.set(0, 2, 0); // move the camera up 3 units in the Y axis
-// camera.position.z = 5; 
+  // camera.position.z = 5;
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping; // Cinematic look
-  renderer.toneMappingExposure = 0.5;                // Darkens over-brightness
+  renderer.toneMappingExposure = 0.5; // Darkens over-brightness
   document.body.appendChild(renderer.domElement); // adds the renderer to the HTML document
   renderer.shadowMap.enabled = true; // enable shadow mapping
   renderer.shadowMap.type = THREE.PCFShadowMap; // `renderer.shadowMap.type` is a property that defines the type of shadow map used by the renderer. THREE.PCFSoftShadowMap is one of the available shadow map types and stands for Percentage-Closer Filtering Soft Shadow Map. This type of shadow map uses an algorithm to smooth the edges of shadows and make them appear softer
@@ -37,10 +37,15 @@ export const setupScene = () => {
   const renderPass = new RenderPass(scene, camera);
   composer.addPass(renderPass);
 
-  const filmPass = new FilmPass(0.35, 0.025, 648, false); 
+  const filmPass = new FilmPass(0.35, 0.025, 648, false);
   composer.addPass(filmPass);
 
-  const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.01, 0.4, 0.85);
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    0.01,
+    0.4,
+    0.85,
+  );
   composer.addPass(bloomPass);
 
   controls = new PointerLockControls(camera, renderer.domElement); // create a PointerLockControls object that takes the camera and the renderer's domElement as arguments. PointerLockControls is a class that allows the camera to be controlled by the mouse and keyboard.
@@ -53,10 +58,10 @@ export const setupScene = () => {
     camera.updateProjectionMatrix(); // update the camera's projection matrix. The projection matrix is used to determine how 3D points are mapped to the 2D space of the screen. It is used to calculate the frustum of the camera which is a truncated pyramid that represents the camera's field of view. Anything outside the frustum is not rendered. The projection matrix is used to calculate the frustum every time the window is resized.
     renderer.setSize(window.innerWidth, window.innerHeight); // update the size of the renderer
     // keep postprocessing composer in sync with renderer size
-    if (composer && typeof composer.setSize === 'function') {
+    if (composer && typeof composer.setSize === "function") {
       composer.setSize(window.innerWidth, window.innerHeight);
     }
   }
 
   return { camera, controls, renderer, composer }; // return the camera, controls, renderer and composer so that they can be used in other modules
-}
+};

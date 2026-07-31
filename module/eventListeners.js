@@ -29,13 +29,6 @@ export const setupEventListeners = (controls, camera, scene) => {
   // Add event listeners for the audio guide buttons
   // document.getElementById("start_audio").addEventListener("click", startAudio);
   // document.getElementById("stop_audio").addEventListener("click", stopAudio);
-
-  // Handle window resize
-  window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight; // updates the camera aspect ratio
-    camera.updateProjectionMatrix(); // updates the camera projection matrix
-    renderer.setSize(window.innerWidth, window.innerHeight); // updates the renderer size
-  });
 };
 
 // toggle the pointer lock
