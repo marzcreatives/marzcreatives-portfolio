@@ -29,13 +29,6 @@ setupRendering(scene, camera, renderer, controls, walls, composer);
 
 loadCatModel(scene);
 
-// Handle window resize
-// window.addEventListener('resize', () => {
-//     camera.aspect = window.innerWidth / window.innerHeight; // updates the camera aspect ratio
-//     camera.updateProjectionMatrix(); // updates the camera projection matrix
-//     renderer.setSize(window.innerWidth, window.innerHeight); // updates the renderer size
-// });
-
 // Loop through each wall and create a bounding box
 // for (let i = 0; i < wallGroup.children.length; i++) {
 //     const wall = wallGroup.children[i];
@@ -60,34 +53,13 @@ const painting1 = createPainting(
   "/assets/painting1.jpg",
   10,
   5,
-  new THREE.Vector3(-10, 5, -14.99),
+  new THREE.Vector3(-10, 5, -22.4),
 );
 const painting2 = createPainting(
   "/assets/painting1.jpg",
   10,
   5,
-  new THREE.Vector3(10, 5, -14.99),
+  new THREE.Vector3(10, 5, -22.4),
 );
 
 scene.add(painting1, painting2);
-
-// Controls
-// const onKeyDown = (event) => {
-//     const keyName = event.key; // gets the name of the key pressed
-//     switch (keyName) {
-//         case 'ArrowUp':
-//             controls.moveForward(0.05); // moves the cube up along the y-axis
-//             break
-//         case 'ArrowDown':
-//             controls.moveForward(-0.05); // moves the cube down along the y-axis
-//             break;
-//         case 'ArrowLeft':
-//             controls.moveRight(-0.05); // moves the cube left along the x-axis
-//             break;
-//         case 'ArrowRight':
-//             controls.moveRight(0.05); // moves the cube right along the x-axis
-//             break;
-//     }
-// };
-// // Event Listener for when we press the keys
-// document.addEventListener('keydown', onKeyDown, false);

@@ -29,6 +29,13 @@ export const setupEventListeners = (controls, camera, scene) => {
   // Add event listeners for the audio guide buttons
   // document.getElementById("start_audio").addEventListener("click", startAudio);
   // document.getElementById("stop_audio").addEventListener("click", stopAudio);
+
+  // Handle window resize
+  window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight; // updates the camera aspect ratio
+    camera.updateProjectionMatrix(); // updates the camera projection matrix
+    renderer.setSize(window.innerWidth, window.innerHeight); // updates the renderer size
+  });
 };
 
 // toggle the pointer lock
@@ -109,19 +116,19 @@ function onKeyUp(event, controls) {
   }
 }
 
-// document.getElementById("toggle-info").addEventListener("click", () => {
-//   document.getElementById("info-panel").classList.toggle("collapsed");
-//   document.getElementById("toggle-info").innerText = document
-//     .getElementById("info-panel")
-//     .classList.contains("collapsed")
-//     ? "Show"
-//     : "Hide";
-// });
+document.getElementById("toggle-info").addEventListener("click", () => {
+  document.getElementById("info-panel").classList.toggle("collapsed");
+  document.getElementById("toggle-info").innerText = document
+    .getElementById("info-panel")
+    .classList.contains("collapsed")
+    ? "Show"
+    : "Hide";
+});
 
 // document.getElementById("about_button").addEventListener("click", function () {
 //   document.getElementById("about-overlay").classList.add("show");
 // });
 
-// document.getElementById("close-about").addEventListener("click", function () {
-//   document.getElementById("about-overlay").classList.remove("show");
-// });
+document.getElementById("close-about").addEventListener("click", function () {
+  document.getElementById("about-overlay").classList.remove("show");
+});

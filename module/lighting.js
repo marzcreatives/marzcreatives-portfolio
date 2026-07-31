@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 export const setupLighting = (scene) => {
   // Ambient light (moderate intensity)
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
   scene.add(ambientLight);
 
   // Hemisphere light to give more natural diffuse lighting (helps MeshStandardMaterial)
