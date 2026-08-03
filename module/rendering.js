@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { updateMovement } from "./movement.js";
-import { getCatModel, updateCatAnimation } from "./cat.js";
+import { getCatModel, updateCatAnimation } from "./loadCat.js";
 
 export const globalUniforms = { uTime: { value: 0 } };
 

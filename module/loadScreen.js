@@ -12,7 +12,7 @@ let masterModel = null;
  * Preloads the monitor GLB model once.
  * @returns {Promise<THREE.Group>}
  */
-export function initMonitorModel() {
+export function loadMonitorModel() {
   return new Promise((resolve, reject) => {
     loader.load(
       "/models/screen/tv_screen.glb",
@@ -158,7 +158,7 @@ const noiseMaterial = new THREE.ShaderMaterial({
 export function addScreenImage(scene, props) {
   if (!masterModel) {
     throw new Error(
-      "Master monitor model not initialized. Call initMonitorModel first.",
+      "Master monitor model not initialized. Call loadMonitorModel first.",
     );
   }
 

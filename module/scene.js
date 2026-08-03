@@ -20,8 +20,7 @@ export const setupScene = () => {
     1000, // far clipping plane
   );
   scene.add(camera); // add the camera to the scene
-  camera.position.set(0, 2, 0); // move the camera up 3 units in the Y axis
-  // camera.position.z = 5;
+  camera.position.set(0, 2, 3); // move the camera up 2 units in the Y axis, 3 back in the Z axis
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.toneMapping = THREE.ACESFilmicToneMapping; // Cinematic look

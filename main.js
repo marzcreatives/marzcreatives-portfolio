@@ -8,8 +8,11 @@ import { createBoundingBoxes } from "./module/boundingBox.js";
 import { setupEventListeners } from "./module/eventListeners.js";
 import { setupRendering } from "./module/rendering.js";
 import { setupPlayButton } from "./module/menu.js";
-import { loadCatModel } from "./module/cat.js";
-import { initMonitorModel, addScreenImage } from "./module/loadScreen.js";
+import { loadCatModel } from "./module/loadCat.js";
+import { loadComputerModel } from "./module/loadComputer.js";
+import { createPodium } from "./module/podium.js";
+import { loadMonitorModel, addScreenImage } from "./module/loadScreen.js";
+import { screenData } from "./module/screenData.js";
 
 const { camera, controls, renderer, composer } = setupScene();
 
@@ -30,23 +33,18 @@ setupRendering(scene, camera, renderer, controls, walls, composer);
 
 loadCatModel(scene);
 
-const monitorLayouts = [
-  {
-    imagePath: "/assets/painting1.jpg",
-    position: [10, 2, -22.4],
-    rotation: [0, 0, 0],
-  },
-  {
-    imagePath: "noise",
-    position: [-10, 2.5, -22.4],
-    rotation: [0, 0, 0],
-  },
-];
-
-// Load the physical model once, then generate instances loop
-initMonitorModel()
+loadComputerModel()
   .then(() => {
-    monitorLayouts.forEach((config) => {
+    createPodium(scene, textureLoader);
+    console.log("Scene successfully constructed across split modules!");
+  })
+  .catch((err) => {
+    console.error("Asset loading failed:", err);
+  });
+
+loadMonitorModel()
+  .then(() => {
+    screenData.forEach((config) => {
       try {
         const monitor = addScreenImage(scene, config);
       } catch (err) {
