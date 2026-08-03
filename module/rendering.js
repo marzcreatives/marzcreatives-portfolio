@@ -4,10 +4,17 @@ import { getCatModel, updateCatAnimation } from "./loadCat.js";
 
 export const globalUniforms = { uTime: { value: 0 } };
 
+export const animationState = {
+  isSinking: false,
+  podiumGroupRef: null,
+};
+
 export const setupRendering = (
   scene,
   camera,
   renderer,
+  cssRenderer,
+  cssScene,
   controls,
   walls,
   composer,
@@ -21,20 +28,25 @@ export const setupRendering = (
 
     updateMovement(delta, controls, camera, walls);
 
-    const distanceThreshold = 8;
+    // 3. Sinking animation evaluation loop
+    if (animationState.isSinking && animationState.podiumGroupRef) {
+      if (animationState.podiumGroupRef.position.y > -3.0) {
+        animationState.podiumGroupRef.position.y -= 3.5 * delta; // Framerate independent drop speed
+      } else {
+        animationState.isSinking = false; // Kill logic cycles when out of view bounds
+      }
+    }
 
+    const distanceThreshold = 8;
     const cat = getCatModel();
 
     if (cat) {
       camera.updateMatrixWorld();
-
       projScreenMatrix.multiplyMatrices(
         camera.projectionMatrix,
         camera.matrixWorldInverse,
       );
-
       frustum.setFromProjectionMatrix(projScreenMatrix);
-
       if (frustum.intersectsObject(cat)) {
         updateCatAnimation(delta);
       }
@@ -45,6 +57,8 @@ export const setupRendering = (
     renderer.gammaOutput = true;
     renderer.gammaFactor = 2.2;
     composer.render();
+    cssRenderer.render(cssScene, camera);
+
     requestAnimationFrame(render);
   };
 

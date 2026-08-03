@@ -1,12 +1,12 @@
 import * as THREE from "three";
-import { scene, setupScene } from "./module/scene.js";
+import { setupRendering, animationState } from "./module/rendering.js";
+import { scene, setupScene, cssScene } from "./module/scene.js";
 import { createWalls } from "./module/walls.js";
 import { setupFloor } from "./module/floor.js";
 import { setupLighting } from "./module/lighting.js";
 import { createCeiling } from "./module/ceiling.js";
 import { createBoundingBoxes } from "./module/boundingBox.js";
 import { setupEventListeners } from "./module/eventListeners.js";
-import { setupRendering } from "./module/rendering.js";
 import { setupPlayButton } from "./module/menu.js";
 import { loadCatModel } from "./module/loadCat.js";
 import { loadComputerModel } from "./module/loadComputer.js";
@@ -14,7 +14,7 @@ import { createPodium } from "./module/podium.js";
 import { loadMonitorModel, addScreenImage } from "./module/loadScreen.js";
 import { screenData } from "./module/screenData.js";
 
-const { camera, controls, renderer, composer } = setupScene();
+const { camera, controls, renderer, cssRenderer, composer } = setupScene();
 
 const textureLoader = new THREE.TextureLoader();
 
@@ -26,17 +26,38 @@ const lighting = setupLighting(scene);
 createBoundingBoxes(walls);
 
 setupPlayButton(controls, composer);
-
 setupEventListeners(controls);
 
-setupRendering(scene, camera, renderer, controls, walls, composer);
+setupRendering(
+  scene,
+  camera,
+  renderer,
+  cssRenderer,
+  cssScene,
+  controls,
+  walls,
+  composer,
+);
 
 loadCatModel(scene);
 
 loadComputerModel()
   .then(() => {
-    createPodium(scene, textureLoader);
-    console.log("Scene successfully constructed across split modules!");
+    // 3. Inject cssScene reference context and capture the created group reference
+    const generatedPodium = createPodium(scene, cssScene, textureLoader);
+    animationState.podiumGroupRef = generatedPodium;
+
+    // 4. Hook closing/enter menu trigger event onto your actual play element wrapper
+    const playBtn = document.getElementById("play_button");
+    if (playBtn) {
+      playBtn.addEventListener("click", () => {
+        // Enable animation sink process flags
+        animationState.isSinking = true;
+
+        // Shut off click accessibility over components inside the space
+        document.getElementById("menu").style.pointerEvents = "none";
+      });
+    }
   })
   .catch((err) => {
     console.error("Asset loading failed:", err);
@@ -53,31 +74,3 @@ loadMonitorModel()
     });
   })
   .catch((err) => console.error("Error preloading master GLB asset:", err));
-
-// Paintings
-// const createPainting = (imageURL, width, height, position) => {
-//   const textureLoader = new THREE.TextureLoader();
-//   const paintingTexture = textureLoader.load(imageURL);
-//   const paintingMaterial = new THREE.MeshBasicMaterial({
-//     map: paintingTexture,
-//   });
-//   const paintingGeometry = new THREE.PlaneGeometry(width, height);
-//   const paintingMesh = new THREE.Mesh(paintingGeometry, paintingMaterial);
-//   paintingMesh.position.set(position.x, position.y, position.z);
-//   return paintingMesh;
-// };
-
-// const painting1 = createPainting(
-//   "/assets/painting1.jpg",
-//   10,
-//   5,
-//   new THREE.Vector3(-10, 5, -22.4),
-// );
-// const painting2 = createPainting(
-//   "/assets/painting1.jpg",
-//   10,
-//   5,
-//   new THREE.Vector3(10, 5, -22.4),
-// );
-
-// scene.add(painting1, painting2);
