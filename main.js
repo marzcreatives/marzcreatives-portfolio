@@ -10,12 +10,11 @@ import { setupEventListeners } from "./module/eventListeners.js";
 import { setupPlayButton } from "./module/menu.js";
 import { loadCatModel } from "./module/loadCat.js";
 import { loadComputerModel } from "./module/loadComputer.js";
-import { createPodium } from "./module/podium.js";
+import { createPodium, switchPodiumScreenTab } from "./module/podium.js";
 import { loadMonitorModel, addScreenImage } from "./module/loadScreen.js";
 import { screenData } from "./module/screenData.js";
 
 const { camera, controls, renderer, cssRenderer, composer } = setupScene();
-
 const textureLoader = new THREE.TextureLoader();
 
 const walls = createWalls(scene, textureLoader);
@@ -25,8 +24,8 @@ const lighting = setupLighting(scene);
 
 createBoundingBoxes(walls);
 
-setupPlayButton(controls, composer);
-setupEventListeners(controls);
+setupPlayButton(controls);
+setupEventListeners(controls, camera, scene);
 
 setupRendering(
   scene,
@@ -38,39 +37,30 @@ setupRendering(
   walls,
   composer,
 );
-
 loadCatModel(scene);
 
 loadComputerModel()
   .then(() => {
-    // 3. Inject cssScene reference context and capture the created group reference
-    const generatedPodium = createPodium(scene, cssScene, textureLoader);
-    animationState.podiumGroupRef = generatedPodium;
-
-    // 4. Hook closing/enter menu trigger event onto your actual play element wrapper
-    const playBtn = document.getElementById("play_button");
-    if (playBtn) {
-      playBtn.addEventListener("click", () => {
-        // Enable animation sink process flags
-        animationState.isSinking = true;
-
-        // Shut off click accessibility over components inside the space
-        document.getElementById("menu").style.pointerEvents = "none";
-      });
-    }
+    const deskGroup = createPodium(scene, cssScene);
+    animationState.podiumGroupRef = deskGroup;
   })
-  .catch((err) => {
-    console.error("Asset loading failed:", err);
+  .catch((err) => console.error("Asset loading failed:", err));
+
+window.addEventListener("keydown", (e) => {
+  if (animationState.isSinking || animationState.isRising) return;
+
+  const key = e.key.toLowerCase();
+  if (key === "a") {
+    switchPodiumScreenTab("about-overlay");
+  } else if (key === "i") {
+    switchPodiumScreenTab("info-panel");
+  }
+});
+
+loadMonitorModel().then(() => {
+  screenData.forEach((config) => {
+    try {
+      addScreenImage(scene, config);
+    } catch (e) {}
   });
-
-loadMonitorModel()
-  .then(() => {
-    screenData.forEach((config) => {
-      try {
-        const monitor = addScreenImage(scene, config);
-      } catch (err) {
-        console.error("Failed to create monitor instance:", err);
-      }
-    });
-  })
-  .catch((err) => console.error("Error preloading master GLB asset:", err));
+});

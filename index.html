@@ -9,62 +9,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <div id="menu">
-      <div id="img_container">
-        <div id="starry_night_bg"></div>
-      </div>
-      <div id="content_container">
-        <div id="content">
-            <div class="title">
-            <h1>MarzCreatives</h1>
-          </div>
-          <div class="title-info">
-            <p>Welcome to my immersive portfolio.</p>
-            <p>
-              Wander through the virtual control room, and engage with 
-              the screens to have access to my projects.
-            </p>
-            <p>
-              Developed by Maryam Islam with a passion for bringing art to
-              life through technology.
-            </p>
-          </div>
+ <!-- Main WebGL canvas remains in the background -->
+<div id="canvas-container"></div>
 
-          <div id="play_button">
-            <p>ENTER CONTROL ROOM</p>
-          </div>
-          <!-- <div id="about_button_container">
-            <button id="about_button">ABOUT</button>
-          </div> -->
-        </div>
+<!-- Container where Three.js will place the transformed HTML elements -->
+<div id="css3d-container"></div>
+
+<!-- Wrap your screen elements so they can be captured by the CSS3DRenderer -->
+<div id="screen-html-wrapper" style="width: 800px; height: 600px; background: #111; overflow: hidden; display: none;">
+  <div id="menu">
+    <!-- Your existing menu markup -->
+    <div id="content_container">
+      <h1>MarzCreatives</h1>
+      <p>Welcome to my immersive portfolio.</p>
+      <div id="play_button" style="cursor: pointer;">
+        <p>ENTER CONTROL ROOM</p>
       </div>
     </div>
+  </div>
 
-    <div id="about-overlay">
-      <button id="close-about">X</button>
-      <h1>About the 3D Art Gallery</h1>
-      <p>
-        Welcome to our virtual 3D Art Gallery. Here, you can navigate through a
-        variety of wonderful artworks and learn about their history and
-        significance.
-      </p>
-      <p>
-        This project is brought to you by Emilian Kasemi. We believe in the
-        power of art to inspire, provoke thought, and communicate across
-        cultures and epochs. Our mission is to make art accessible to everyone,
-        regardless of location or background.
-      </p>
-      <p>
-        Feel free to explore and engage with the artworks. The gallery is best
-        experienced in full-screen mode. For optimal navigation, use the arrow
-        keys or the W, A, S, and D keys. You can also use your mouse to change
-        the viewing direction. Additional information about the artworks will
-        appear on your screen as you approach them.
-      </p>
-    </div>
+  <!-- <div id="about-overlay" style="display: none;">
+    <button id="close-about">X</button>
+    <h1>About the 3D Art Gallery</h1>
+  </div> -->
 
-    <div id="info-panel">
-      <div id="info-header">
+  <div id="info-panel" style="display: none;">
+    <div id="info-header">
         <h3>Controls</h3>
         <button id="toggle-info">Hide</button>
       </div>
@@ -79,6 +49,8 @@
         <p><b>P:</b> Stop audio guide</p>
       </div>
     </div>
+</div>
+
    
     <script type="module" src="./main.js"></script>
 </body>

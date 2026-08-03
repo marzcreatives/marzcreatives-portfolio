@@ -17,7 +17,7 @@ body {
   font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial,
     "Lucida Grande", sans-serif;
   background-color: #121212;
-  cursor: url("http://www.rw-designer.com/cursor-view/97756.png") 16 16, auto;
+  cursor: url("http://www.rw-designer.com/cursor-view/1228.png") 16 16, auto;
 }
 
 p,
@@ -224,6 +224,40 @@ canvas {
     background-position: 100% 0%;
   }
 }
+
+#canvas-container, #css3d-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+#canvas-container { z-index: 1; }
+#css3d-container { 
+  z-index: 2; 
+  pointer-events: none; /* Allows pointer pass-through to look around background */
+}
+
+/* Ensure child menus receive pointer active click hits safely inside the 3D monitor area */
+#screen-html-wrapper, #menu, #about-overlay, #info-panel, #play_button, button {
+  pointer-events: auto !important;
+}
+
+/* Set standard styling metrics for the monitors inner context wrapper */
+#screen-html-wrapper {
+  background: #111111;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+#screen-html-wrapper, #menu, #about-overlay, #info-panel, #play_button {
+  display: block; /* Let CSS3D see layout boundaries continuously */
+  pointer-events: auto !important; /* Forces capture mechanics on screen text faces */
+}
+
 
 #painting-info {
   position: fixed;
