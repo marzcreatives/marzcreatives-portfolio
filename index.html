@@ -18,7 +18,7 @@
 <!-- Wrap your screen elements so they can be captured by the CSS3DRenderer -->
 <div id="screen-html-wrapper" style="width: 800px; height: 600px; display: block" >
   <div id="menu">
-      <h1 class="title">marzcreatives</h1>
+      <h1 class="title"><span class="low">m</span>arzcreat<span class="low">i</span>ves</h1>
       <div id="content">
         <p id="welcome">>Welcome to my immersive portfolio_</p>
         <p id="description">>Designed for exploration. Built around curiosity_</p>
@@ -32,27 +32,40 @@
       </div>
   </div>
 
-  <div id="about-overlay" style="display: none;">
-    <button id="close-about">X</button>
-    <h1>About the 3D Art Gallery</h1>
+  <div id="about" style="display: none;">
+    <button id="toggle-about">Close</button>
+    <h1>About Me</h1>
+    <div id="about-content">
+      <p>Hi, I'm Maryam. I design products for complex environments and the people who rely on 
+        them. My background in architecture, UX, and frontend engineering has shaped the way I 
+        approach design: balancing structure, usability, and technical reality. I enjoy solving 
+        difficult problems, simplifying workflows, and creating experiences that feel effortless, 
+        even when the systems behind them aren't.</p>
+    </div>
+    <div id="about-tags">
+      <ul>
+        <li>Product Design</li>
+        <li>UX Design</li>
+        <li>UI Development</li>
+        <li>Design Systems</li>
+        <li>Accessibility</li>
+      </ul>
+    </div>
   </div>
 
   <div id="info-panel" style="display: none;">
     <div id="info-header">
         <h3>Controls</h3>
-        <button id="toggle-info">Hide</button>
-      </div>
-      <div id="info-content">
-        <p><b>W/A/S/D:</b> Move around</p>
-        <p><b>Mouse:</b> Look around</p>
-        <p><b>Space:</b> Toggle pointer lock</p>
-        <p><b>X:</b> Return to Menu</p>
-        <p><b>Enter:</b> Start exploration</p>
-        <p><b>Esc:</b> Stop exploration</p>
-        <p><b>G:</b> Start audio guide</p>
-        <p><b>P:</b> Stop audio guide</p>
-      </div>
     </div>
+    <div id="info-content">
+      <p><b>W/A/S/D:</b> Move</p>
+      <p><b>Mouse:</b> Look around</p>
+      <p><b>Enter:</b> Enter control room</p>
+      <p><b>Esc:</b> Return to menu</p>
+      <p><b>Space:</b> Lock / unlock view</p>
+      <p><b>X:</b> Return to Menu</p>
+    </div>
+  </div>
 </div>
 
    

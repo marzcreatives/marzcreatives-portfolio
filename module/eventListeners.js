@@ -50,16 +50,10 @@ function onKeyDown(event, controls) {
     keysPressed[key] = true; // if yes, set the value of the key pressed to true
   }
 
-  if (key === "e scape") {
+  if (key === "escape") {
     // if the "ESC" key is pressed
     showMenu(); // show the menu
     showMenuOnUnlock = true;
-    controls.unlock(); // unlock the pointer
-    lockPointer = false;
-  }
-
-  if (key === "p") {
-    // if the "SPACE" key is pressed
     controls.unlock(); // unlock the pointer
     lockPointer = false;
   }
@@ -73,7 +67,7 @@ function onKeyDown(event, controls) {
   }
 
   if (key === " ") {
-    // if the "p" key is pressed
+    // if the "SPACE" key is pressed
     togglePointerLock(controls); // toggle the pointer lock
   }
 
@@ -86,14 +80,6 @@ function onKeyDown(event, controls) {
   //   // if the "s" key is pressed
   //   stopAudio(); // stop the audio guide
   // }
-
-  if (event.key === "x") {
-    // if the "x" key is pressed
-    showMenu(); // show the menu
-    showMenuOnUnlock = true;
-    controls.unlock(); // unlock the pointer
-    lockPointer = false;
-  }
 
   if (key === "r") {
     // if the "r" key is pressed
@@ -109,7 +95,7 @@ function onKeyUp(event, controls) {
   }
 }
 
-const toggleInfoButton = document.getElementById("toggle-info");
+const toggleInfoButton = document.getElementById("toggle-controls");
 const infoPanel = document.getElementById("info-panel");
 
 if (toggleInfoButton && infoPanel) {

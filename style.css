@@ -73,21 +73,27 @@ canvas {
 }
 
 #menu .title {
+  font-variant: small-caps;
   font-family: "Optima", sans-serif;
   color: #f2c641;
-  font-size: 2.2em;
-  margin-top: 1.4em;
-  margin-bottom: 0.4em;
+  font-size: 2.8em;
+  margin-top: 1.2em;
+  margin-bottom: 0.2em;
   text-shadow: 2px 2px 0px #f2c641, 4px 4px 0px rgba(0, 0, 0, 0.4);
   animation: shadow-pulse 2s infinite;
 }
 
+#menu .title .low {
+  font-variant: normal;
+  text-transform: lowercase;
+}
+
 @keyframes shadow-pulse {
   0% {
-    text-shadow: 2px 2px 0px oklab(37.584% -0.08565 0.05482), 4px 4px 0px rgba(0, 0, 0, 0.4);
+    text-shadow: 2px 2px 0px #107a6e, 4px 4px 0px rgba(0, 0, 0, 0.4);
   }
   100% {
-    text-shadow: 4px 4px 0px #0d4f1e, 8px 8px 0px rgba(0, 0, 0, 0.4);
+    text-shadow: 4px 4px 0px #107a6e, 8px 8px 0px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -104,11 +110,10 @@ canvas {
 
 #menu #content  #description {
   overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .1em solid orange; /* /* The typwriter cursor */
+  border-right: .1em solid #f2c641; /* /* The typwriter cursor */
   white-space: nowrap; /* Keeps the content on a single line */
   margin: 0 auto; /* Gives that scrolling effect as the typing happens */
   animation: typing 6s steps(40, end), blink-caret .75s step-end infinite;
-  animation-delay: 1s; 
 }
 
 @keyframes typing {
@@ -123,7 +128,7 @@ canvas {
 
 #menu #play_button {
   display: inline-block;
-  background-color: rgba(13, 79, 30, 0.8);
+  background-color: rgba(52, 58, 125, 0.8);
   color: #f2c641;
   border-radius: 0.2em;
   padding: 0.5em 1.5em;
@@ -139,7 +144,7 @@ canvas {
 }
 
 #menu #play_button:hover {
-  background-color: rgba(16, 122, 110);
+  background-color: rgb(16, 122, 110);
   cursor: pointer;
   transform: scale(1.05);
 }
