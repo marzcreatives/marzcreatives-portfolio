@@ -67,28 +67,38 @@ export function syncPodiumScreenOverlay() {
   );
 }
 
+export function setScreenWrapperVisible(visible) {
+  const wrapper = document.getElementById("screen-html-wrapper");
+  if (wrapper) {
+    wrapper.style.display = visible ? "block" : "none";
+  }
+
+  if (podiumUIObjects.screen) {
+    podiumUIObjects.screen.visible = visible;
+  }
+}
+
 /**
  * Changes active visible tab within the 3D computer screen geometry layout context
  */
-export function switchPodiumScreenTab(activeTabId) {
-  const tabElements = {
-    menu: document.getElementById("menu"),
-    about: document.getElementById("about-overlay"),
-    info: document.getElementById("info-panel"),
-  };
 
-  Object.keys(tabElements).forEach((key) => {
-    const el = tabElements[key];
-    if (el) {
-      el.style.display = key === activeTabId ? "block" : "none";
-    }
+const panels = ["menu", "about", "controls"];
+let currentPanel = "menu";
+
+export const switchPodiumScreenTab = (activePanel) => {
+  const targetPanel = currentPanel === activePanel ? "menu" : activePanel;
+
+  panels.forEach((id) => {
+    const el = document.getElementById(id);
+
+    if (!el) return;
+
+    el.style.display = id === targetPanel ? "block" : "none";
   });
+  currentPanel = targetPanel;
 
-  const wrapper = document.getElementById("screen-html-wrapper");
-  if (wrapper) {
-    wrapper.style.display = "block";
-  }
-}
+  setScreenWrapperVisible(true);
+};
 
 export function createPodium(scene, cssScene) {
   const masterModel = getComputerModel();

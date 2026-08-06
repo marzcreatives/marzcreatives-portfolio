@@ -20,23 +20,22 @@
   <div id="menu">
       <h1 class="title"><span class="low">m</span>arzcreat<span class="low">i</span>ves</h1>
       <div id="content">
-        <p id="welcome">>Welcome to my immersive portfolio_</p>
+        <p id="welcome">>Welcome to my immersive portfolio.</p>
         <p id="description">>Designed for exploration. Built around curiosity_</p>
       </div>
       <div id="play_button" style="cursor: pointer;">
        <p>ENTER CONTROL ROOM →</p>
       </div>
-      <div id="links">
-        <p id="toggle-about" class="secondary-link">[ About Me ]</p>
-        <p id="toggle-controls" class="secondary-link">[ Controls ]</p>
+      <div class="links">
+        <p class="toggle-about" class="secondary-link">[ About Me ]</p>
+        <p class="toggle-controls" class="secondary-link">[ Controls ]</p>
       </div>
   </div>
 
   <div id="about" style="display: none;">
-    <button id="toggle-about">Close</button>
-    <h1>About Me</h1>
+    <h2>Hi, I'm Maryam!</h2>
     <div id="about-content">
-      <p>Hi, I'm Maryam. I design products for complex environments and the people who rely on 
+      <p>I design products for complex environments and the people who rely on 
         them. My background in architecture, UX, and frontend engineering has shaped the way I 
         approach design: balancing structure, usability, and technical reality. I enjoy solving 
         difficult problems, simplifying workflows, and creating experiences that feel effortless, 
@@ -45,25 +44,58 @@
     <div id="about-tags">
       <ul>
         <li>Product Design</li>
-        <li>UX Design</li>
-        <li>UI Development</li>
-        <li>Design Systems</li>
         <li>Accessibility</li>
+        <li>Frontend Engineering</li>
+        <li>Systems Thinking</li>
       </ul>
+    </div>
+    <div class="links">
+      <p class="toggle-menu" class="secondary-link">[ Return to Menu ]</p>  
+      <p class="toggle-controls" class="secondary-link">[ Controls ]</p>
     </div>
   </div>
 
-  <div id="info-panel" style="display: none;">
-    <div id="info-header">
-        <h3>Controls</h3>
+  <div id="controls" style="display: none;">
+    <h2>Controls</h2>
+    <div id="controls-content">
+      <table>
+        <tbody>
+          <tr>
+            <td class="key">W/A/S/D</td>
+            <td class="arrow">→</td>
+            <td class="action">Move</td>
+          </tr>
+          <tr>
+            <td class="key">Mouse</td>
+            <td class="arrow">→</td>
+            <td class="action">Look around</td>
+          </tr>
+          <tr>
+            <td class="key">Enter</td>
+            <td class="arrow">→</td>
+            <td class="action">Enter control room</td>
+          </tr>
+          <tr>
+            <td class="key">Esc</td>
+            <td class="arrow">→</td>
+            <td class="action">Return to menu</td>
+          </tr>
+          <tr>
+            <td class="key">Space</td>
+            <td class="arrow">→</td>
+            <td class="action">Lock / unlock view</td>
+          </tr>
+          <tr>
+            <td class="key">R</td>
+            <td class="arrow">→</td>
+            <td class="action">Reload</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div id="info-content">
-      <p><b>W/A/S/D:</b> Move</p>
-      <p><b>Mouse:</b> Look around</p>
-      <p><b>Enter:</b> Enter control room</p>
-      <p><b>Esc:</b> Return to menu</p>
-      <p><b>Space:</b> Lock / unlock view</p>
-      <p><b>X:</b> Return to Menu</p>
+    <div class="links">
+      <p class="toggle-menu" class="secondary-link">[ Return to Menu ]</p>
+      <p class="toggle-about" class="secondary-link">[ About Me ]</p>
     </div>
   </div>
 </div>

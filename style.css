@@ -76,9 +76,9 @@ canvas {
   font-variant: small-caps;
   font-family: "Optima", sans-serif;
   color: #f2c641;
-  font-size: 2.8em;
-  margin-top: 1.2em;
-  margin-bottom: 0.2em;
+  font-size: 3em;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
   text-shadow: 2px 2px 0px #f2c641, 4px 4px 0px rgba(0, 0, 0, 0.4);
   animation: shadow-pulse 2s infinite;
 }
@@ -102,17 +102,17 @@ canvas {
 }
 
 #menu #content {
-  margin: 2em 0.9em 0 1em;
+  margin: 2em 1em 0 1em;
   text-align: left;
   font-size: 0.85em;
   line-height: 1em;
 }
 
-#menu #content  #description {
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .1em solid #f2c641; /* /* The typwriter cursor */
-  white-space: nowrap; /* Keeps the content on a single line */
-  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+#menu #content #description {
+  overflow: hidden; 
+  border-right: .1em solid #f2c641; 
+  white-space: nowrap; 
+  margin: 0 auto; 
   animation: typing 6s steps(40, end), blink-caret .75s step-end infinite;
 }
 
@@ -149,28 +149,6 @@ canvas {
   transform: scale(1.05);
 }
 
-#links {
-  display: flex;
-  justify-content: center;
-  gap: 1em;
-}
-
-.secondary-link {
-  font-size: 0.85rem;
-  opacity: 0.6;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
- 
-.secondary-link:hover {
-  opacity: 1;
-}
-
-canvas {
-  width: 100%;
-  height: 100%;
-}
-
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -180,12 +158,123 @@ canvas {
   }
 }
 
-.title {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 1em;
+#about {
+    padding: 0 1em;
 }
 
+#about h2 {
+  font-family: "Optima", sans-serif;
+  color: #f2c641;
+  margin-bottom: 0.5em;
+  font-style: italic;
+}
+
+#about-content p {
+  max-width: 40em;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  text-align: justify;
+  font-size: 9.5px;
+  line-height: 1.5em;
+}
+
+#about-tags {
+  display: flex;
+  justify-content: center;
+}
+
+#about-tags ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.2em;
+  width: 100%;
+  margin-bottom: 0.2em;
+}
+
+#about-tags li {
+  padding: 0.2em 0;
+  border: 1px solid rgba(242, 198, 65, 0.5);
+  border-radius: 999px;
+  font-size: 8px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+#controls {
+  padding: 0 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+}
+
+#controls h2 {
+  color: #f2c641;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 0.5em;
+  font-style: italic;
+}
+
+#controls table {
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85em;
+  border-collapse: separate;
+  border-spacing: 1.5em 0.5em; 
+  border-left: 1px solid #f2c641; 
+}
+
+#controls td:first-child {
+  padding-left: 0;
+}
+
+#controls .key {
+  font-weight: bold;
+}
+
+#controls .arrow {
+  color: #888;
+}
+
+#menu,
+#about,
+#controls {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.links {
+  position: absolute;
+  bottom: 0.8em;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.toggle-menu, .toggle-about, .toggle-controls {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+ 
+.toggle-menu:hover, .toggle-about:hover, .toggle-controls:hover {
+  opacity: 1;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
 
 #canvas-container, #css3d-container {
   position: absolute;
@@ -226,7 +315,8 @@ canvas {
 }
 
 #screen-html-wrapper #menu,
-#screen-html-wrapper #info-panel {
+#screen-html-wrapper #about,
+#screen-html-wrapper #controls {
   display: none;
   width: 100%;
   height: 100%;
@@ -241,8 +331,8 @@ canvas {
 }
 
 #screen-html-wrapper #menu,
-#screen-html-wrapper #about-overlay,
-#screen-html-wrapper #info-panel {
+#screen-html-wrapper #about,
+#screen-html-wrapper #controls {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -255,9 +345,12 @@ canvas {
 }
 
 #screen-html-wrapper #menu {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-
+ 
 #screen-html-wrapper h1,
 #screen-html-wrapper h3,
 #screen-html-wrapper p,
@@ -266,7 +359,7 @@ canvas {
 }
 
 #screen-html-wrapper #play_button {
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2), 0 0 15px rgba(255, 255, 255, 0.08);
 }
 
 #screen-html-wrapper, #menu, #about-overlay, #info-panel, #play_button {
@@ -274,108 +367,8 @@ canvas {
   pointer-events: auto !important;
 }
 
-#info-panel {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  width: 200px;
-  background-color: rgba(35, 35, 190, 0.8);
-  border-radius: 10px;
-  padding: 10px;
-  color: white;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
-  transition: all 0.5s ease;
-}
 
-#info-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
-#info-header h3 {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin: 0;
-}
-
-#info-header button {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
-  border-radius: 50%;
-  padding: 5px;
-  cursor: pointer;
-  color: #2323be;
-}
-
-#info-content {
-  font-size: 1em;
-  line-height: 1.5em;
-}
-
-#info-content p {
-  margin: 5px 0;
-}
-
-#info-panel.collapsed #info-content {
-  max-height: 0;
-  overflow: hidden;
-}
-
-#about-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 50px;
-  box-sizing: border-box;
-  transform: translateY(-100%);
-  transition: transform 0.3s ease-in-out;
-}
-
-#about-overlay.show {
-  transform: translateY(0);
-}
-
-#about-overlay h1 {
-  margin-top: 0;
-}
-
-#close-about {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 2em;
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  cursor: pointer;
-}
-
-#about_button {
-  display: inline-block;
-  background-color: rgba(52, 58, 125, 0.8);
-  color: #f2c641;
-  border-radius: 30px;
-  padding: 0.5em 1.5em;
-  font-weight: bold;
-  margin: 0 auto; /* Centered the button */
-  transition: all 0.4s;
-  border: 2px solid #2323be;
-}
-
-#about_button:hover {
-  background-color: rgba(52, 58, 125);
-  cursor: pointer;
-  transform: scale(1.05);
-}
-
+/* TODO: Audio section styling */
 #audio_controls {
   position: fixed;
   top: 10px;

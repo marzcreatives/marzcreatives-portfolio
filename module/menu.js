@@ -1,15 +1,16 @@
 import { triggerPodiumSink, triggerPodiumRise } from "./rendering.js";
-import { switchPodiumScreenTab } from "./podium.js";
+import { switchPodiumScreenTab, setScreenWrapperVisible } from "./podium.js";
 
 export const hideMenu = () => {
-  // Instead of turning off display, initiate the sink physics loop
   triggerPodiumSink();
+  setTimeout(() => {
+    setScreenWrapperVisible(false);
+  }, 1000);
 };
 
 export const showMenu = () => {
-  // Make sure the primary menu div layout is selected inside the CSS3D stack
+  setScreenWrapperVisible(true);
   switchPodiumScreenTab("menu");
-  // Bring the physical podium up out of the floor plane
   triggerPodiumRise();
 };
 

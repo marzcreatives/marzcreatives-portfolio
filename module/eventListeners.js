@@ -1,5 +1,6 @@
-import { keysPressed } from "./movement.js"; // import the keysPressed object
-import { showMenu, hideMenu } from "./menu.js"; // import the showMenu function
+import { keysPressed } from "./movement.js";
+import { showMenu, hideMenu } from "./menu.js";
+import { switchPodiumScreenTab } from "./podium.js";
 // import { startAudio, stopAudio } from "../modules/audioGuide.js";
 
 let lockPointer = true;
@@ -71,13 +72,13 @@ function onKeyDown(event, controls) {
     togglePointerLock(controls); // toggle the pointer lock
   }
 
-  // if (event.key === "g") {
+  // if (event.key === "a") {
   //   // if the "a" key is pressed
   //   startAudio(); // start the audio guide
   // }
 
   // if (event.key === "p") {
-  //   // if the "s" key is pressed
+  //   // if the "p" key is pressed
   //   stopAudio(); // stop the audio guide
   // }
 
@@ -95,17 +96,26 @@ function onKeyUp(event, controls) {
   }
 }
 
-const toggleInfoButton = document.getElementById("toggle-controls");
-const infoPanel = document.getElementById("info-panel");
-
-if (toggleInfoButton && infoPanel) {
-  toggleInfoButton.addEventListener("click", () => {
-    infoPanel.classList.toggle("collapsed");
-    toggleInfoButton.innerText = infoPanel.classList.contains("collapsed")
-      ? "Show"
-      : "Hide";
+document.querySelectorAll(".toggle-about").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchPodiumScreenTab("about");
   });
-}
+});
+
+document.querySelectorAll(".toggle-controls").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchPodiumScreenTab("controls");
+  });
+});
+
+document.querySelectorAll(".toggle-menu").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchPodiumScreenTab("menu");
+  });
+});
 
 // document.getElementById("about_button").addEventListener("click", function () {
 //   document.getElementById("about-overlay").classList.add("show");
