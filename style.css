@@ -65,8 +65,6 @@ canvas {
   position: relative;
   margin: 0 auto;
   text-align: center;
-  font-size: 1.2em;
-  border-radius: 0.9em;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   transform: none;
@@ -75,22 +73,21 @@ canvas {
 }
 
 #menu .title {
-  padding: 1em;
-  background-color: rgba(52, 58, 125, 0.8);
+  font-family: "Optima", sans-serif;
   color: #f2c641;
-  border-radius: 0.9em;
-  position: relative;
-  z-index: 2;
+  font-size: 2.2em;
+  margin-top: 1.4em;
+  margin-bottom: 0.4em;
   text-shadow: 2px 2px 0px #f2c641, 4px 4px 0px rgba(0, 0, 0, 0.4);
-  animation: fadeIn 2s ease-in, shadow-pulse 2s infinite;
+  animation: shadow-pulse 2s infinite;
 }
 
 @keyframes shadow-pulse {
   0% {
-    text-shadow: 2px 2px 0px #2323be, 4px 4px 0px rgba(0, 0, 0, 0.4);
+    text-shadow: 2px 2px 0px oklab(37.584% -0.08565 0.05482), 4px 4px 0px rgba(0, 0, 0, 0.4);
   }
   100% {
-    text-shadow: 4px 4px 0px #2323be, 8px 8px 0px rgba(0, 0, 0, 0.4);
+    text-shadow: 4px 4px 0px #0d4f1e, 8px 8px 0px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -98,72 +95,70 @@ canvas {
   transform: rotateX(0deg); /* reset the transformation on hover */
 }
 
-.title-info {
-  background-color: rgba(35, 37, 88, 0.8);
-  color: #f2c641;
-  padding: 1em;
-  border-radius: 0.9em;
-  width: 80%;
-  text-align: center;
-  margin: 0 auto;
-}
-
-
-#menu #img_container {
-  position: relative;
-  height: 14.5em;
-  overflow: hidden;
-  border-top-left-radius: 0.9em;
-  border-top-right-radius: 0.9em;
-}
-
-#menu #img_container img {
-  flex-shrink: 0;
-  width: 105%;
-}
-
-@keyframes fadeInSlideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#menu .title h1 {
-  margin: 0;
-  font-size: 2.5em;
-}
-
 #menu #content {
-  padding: 1em;
+  margin: 2em 0.9em 0 1em;
+  text-align: left;
+  font-size: 0.85em;
+  line-height: 1em;
 }
 
-#menu #content p {
-  font-size: 1.1em;
-  line-height: 1.6em;
-  margin: 0.5em 0;
+#menu #content  #description {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .1em solid orange; /* /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  animation: typing 6s steps(40, end), blink-caret .75s step-end infinite;
+  animation-delay: 1s; 
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white; }
 }
 
 #menu #play_button {
   display: inline-block;
-  background-color: rgba(52, 58, 125, 0.8);
+  background-color: rgba(13, 79, 30, 0.8);
   color: #f2c641;
-  border-radius: 0.9em;
+  border-radius: 0.2em;
   padding: 0.5em 1.5em;
   font-weight: bold;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin: 2.5em 1em 0.5em 1em;
   transition: all 0.4s;
 }
 
+#menu #play_button p {
+  margin: 0;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
 #menu #play_button:hover {
-  background-color: rgba(52, 58, 125);
+  background-color: rgba(16, 122, 110);
   cursor: pointer;
   transform: scale(1.05);
+}
+
+#links {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.secondary-link {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+ 
+.secondary-link:hover {
+  opacity: 1;
 }
 
 canvas {
@@ -247,7 +242,6 @@ canvas {
   inset: 0;
   width: 100%;
   height: 100%;
-  padding: 24px;
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.12);

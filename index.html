@@ -10,7 +10,7 @@
 </head>
 <body>
  <!-- Main WebGL canvas remains in the background -->
-<div id="canvas-container"></div>
+<canvas id="canvas-container"></canvas>
 
 <!-- Container where Three.js will place the transformed HTML elements -->
 <div id="css3d-container"></div>
@@ -18,14 +18,18 @@
 <!-- Wrap your screen elements so they can be captured by the CSS3DRenderer -->
 <div id="screen-html-wrapper" style="width: 800px; height: 600px; display: block" >
   <div id="menu">
-      <h1>marzcreatives</h1>
-      <p>Welcome to my immersive portfolio.</p>
-      <p>Where complex systems meet intuitive design.</p>
+      <h1 class="title">marzcreatives</h1>
+      <div id="content">
+        <p id="welcome">>Welcome to my immersive portfolio_</p>
+        <p id="description">>Designed for exploration. Built around curiosity_</p>
+      </div>
       <div id="play_button" style="cursor: pointer;">
        <p>ENTER CONTROL ROOM →</p>
       </div>
-      <button id="toggle-about">About Me</button>
-      
+      <div id="links">
+        <p id="toggle-about" class="secondary-link">[ About Me ]</p>
+        <p id="toggle-controls" class="secondary-link">[ Controls ]</p>
+      </div>
   </div>
 
   <div id="about-overlay" style="display: none;">
