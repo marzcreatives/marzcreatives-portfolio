@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { updateMovement } from "./movement.js";
 import { getCatModel, updateCatAnimation } from "./loadCat.js";
-import { switchPodiumScreenTab } from "./podium.js";
+import { switchPodiumScreenTab, syncPodiumScreenOverlay } from "./podium.js";
 
 export const globalUniforms = { uTime: { value: 0 } };
 
@@ -89,6 +89,8 @@ export const setupRendering = (
     }
 
     globalUniforms.uTime.value = clock.getElapsedTime();
+
+    syncPodiumScreenOverlay();
 
     renderer.gammaOutput = true;
     renderer.gammaFactor = 2.2;

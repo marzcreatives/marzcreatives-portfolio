@@ -2,15 +2,15 @@ import * as THREE from "three";
 
 export const setupLighting = (scene) => {
   // Ambient light (moderate intensity)
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
   scene.add(ambientLight);
 
   // Hemisphere light to give more natural diffuse lighting (helps MeshStandardMaterial)
-  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
+  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.65);
   hemiLight.position.set(0, 20, 0);
   scene.add(hemiLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
   directionalLight.position.set(10, 20, 10);
   scene.add(directionalLight);
 

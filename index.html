@@ -16,22 +16,22 @@
 <div id="css3d-container"></div>
 
 <!-- Wrap your screen elements so they can be captured by the CSS3DRenderer -->
-<div id="screen-html-wrapper" style="width: 800px; height: 600px; background: #111; overflow: hidden; display: none;">
+<div id="screen-html-wrapper" style="width: 800px; height: 600px; display: block" >
   <div id="menu">
-    <!-- Your existing menu markup -->
-    <div id="content_container">
-      <h1>MarzCreatives</h1>
+      <h1>marzcreatives</h1>
       <p>Welcome to my immersive portfolio.</p>
+      <p>Where complex systems meet intuitive design.</p>
       <div id="play_button" style="cursor: pointer;">
-        <p>ENTER CONTROL ROOM</p>
+       <p>ENTER CONTROL ROOM →</p>
       </div>
-    </div>
+      <button id="toggle-about">About Me</button>
+      
   </div>
 
-  <!-- <div id="about-overlay" style="display: none;">
+  <div id="about-overlay" style="display: none;">
     <button id="close-about">X</button>
     <h1>About the 3D Art Gallery</h1>
-  </div> -->
+  </div>
 
   <div id="info-panel" style="display: none;">
     <div id="info-header">
@@ -42,7 +42,7 @@
         <p><b>W/A/S/D:</b> Move around</p>
         <p><b>Mouse:</b> Look around</p>
         <p><b>Space:</b> Toggle pointer lock</p>
-        <p><b>M:</b> Show Menu</p>
+        <p><b>X:</b> Return to Menu</p>
         <p><b>Enter:</b> Start exploration</p>
         <p><b>Esc:</b> Stop exploration</p>
         <p><b>G:</b> Start audio guide</p>

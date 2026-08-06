@@ -87,8 +87,8 @@ function onKeyDown(event, controls) {
   //   stopAudio(); // stop the audio guide
   // }
 
-  if (event.key === "m") {
-    // if the "h" key is pressed
+  if (event.key === "x") {
+    // if the "x" key is pressed
     showMenu(); // show the menu
     showMenuOnUnlock = true;
     controls.unlock(); // unlock the pointer
@@ -109,19 +109,22 @@ function onKeyUp(event, controls) {
   }
 }
 
-document.getElementById("toggle-info").addEventListener("click", () => {
-  document.getElementById("info-panel").classList.toggle("collapsed");
-  document.getElementById("toggle-info").innerText = document
-    .getElementById("info-panel")
-    .classList.contains("collapsed")
-    ? "Show"
-    : "Hide";
-});
+const toggleInfoButton = document.getElementById("toggle-info");
+const infoPanel = document.getElementById("info-panel");
+
+if (toggleInfoButton && infoPanel) {
+  toggleInfoButton.addEventListener("click", () => {
+    infoPanel.classList.toggle("collapsed");
+    toggleInfoButton.innerText = infoPanel.classList.contains("collapsed")
+      ? "Show"
+      : "Hide";
+  });
+}
 
 // document.getElementById("about_button").addEventListener("click", function () {
 //   document.getElementById("about-overlay").classList.add("show");
 // });
 
-document.getElementById("close-about").addEventListener("click", function () {
-  document.getElementById("about-overlay").classList.remove("show");
-});
+// document.getElementById("close-about").addEventListener("click", function () {
+//   document.getElementById("about-overlay").classList.remove("show");
+// });

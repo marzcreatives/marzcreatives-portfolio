@@ -39,7 +39,9 @@ export const setupScene = () => {
   cssRenderer.domElement.style.position = "absolute";
   cssRenderer.domElement.style.top = "0px";
   cssRenderer.domElement.style.left = "0px";
-  cssRenderer.domElement.style.pointerEvents = "none"; // Let mouse controls pass through to WebGL
+  cssRenderer.domElement.style.pointerEvents = "auto";
+  cssRenderer.domElement.style.zIndex = "10";
+  cssRenderer.domElement.style.background = "transparent";
   document.body.appendChild(cssRenderer.domElement);
 
   composer = new EffectComposer(renderer);

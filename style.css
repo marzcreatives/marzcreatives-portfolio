@@ -6,7 +6,7 @@ body {
   width: 100%;
   height: 100%;
   font-size: 12px;
-  color: #28282f;
+  /* color: #28282f; */
   margin: 0em;
 }
 
@@ -45,17 +45,33 @@ canvas {
   display: none;
 }
 
+#screen-html-wrapper {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  transform-origin: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#screen-html-wrapper,
+#screen-html-wrapper * {
+  pointer-events: auto;
+}
+
 #menu {
-  width: 40em;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: min(40em, 90%);
+  position: relative;
+  margin: 0 auto;
   text-align: center;
   font-size: 1.2em;
   border-radius: 0.9em;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
   overflow: hidden;
+  transform: none;
+  top: auto;
+  left: auto;
 }
 
 #menu .title {
@@ -92,15 +108,6 @@ canvas {
   margin: 0 auto;
 }
 
-#menu #content_container {
-  padding: 1em;
-  border-bottom-left-radius: 0.9em;
-  border-bottom-right-radius: 0.9em;
-
-  -webkit-box-shadow: 0em 0.25em 0.75em rgba(124, 124, 124, 0.5);
-  -moz-box-shadow: 0em 0.25em 0.75em rgba(124, 124, 124, 0.5);
-  box-shadow: 0em 0.25em 0.75em rgba(124, 124, 124, 0.5);
-}
 
 #menu #img_container {
   position: relative;
@@ -124,19 +131,6 @@ canvas {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-#menu {
-  width: 40em;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  font-size: 1.2em;
-  border-radius: 0.9em;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
 }
 
 #menu .title h1 {
@@ -192,38 +186,6 @@ canvas {
   margin-bottom: 1em;
 }
 
-#starry_night_bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("https://cdnb.artstation.com/p/assets/images/images/004/117/523/large/habli-hek-highresscreenshot00000.jpg?1480511352");
-  background-size: cover;
-  background-position: center;
-  z-index: -1;
-  animation: panBg 30s linear infinite;
-  background-attachment: fixed;
-}
-
-#starry_night_bg:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-@keyframes panBg {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 100% 0%;
-  }
-}
 
 #canvas-container, #css3d-container {
   position: absolute;
@@ -246,51 +208,71 @@ canvas {
 
 /* Set standard styling metrics for the monitors inner context wrapper */
 #screen-html-wrapper {
-  background: #111111;
+  width: 800px;
+  height: 600px;
+  background: rgba(0, 0, 0, 0.95);
   color: #ffffff;
   font-family: Arial, sans-serif;
-  padding: 30px;
+  padding: 24px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+  transform: translateZ(0);
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#screen-html-wrapper #menu,
+#screen-html-wrapper #info-panel {
+  display: none;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
 }
 
-#screen-html-wrapper, #menu, #about-overlay, #info-panel, #play_button {
-  display: block; /* Let CSS3D see layout boundaries continuously */
-  pointer-events: auto !important; /* Forces capture mechanics on screen text faces */
+#screen-html-wrapper #menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-
-#painting-info {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 20px;
+#screen-html-wrapper #menu,
+#screen-html-wrapper #about-overlay,
+#screen-html-wrapper #info-panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
-  font-family: "Arial", sans-serif;
-  color: #fff;
-  width: 300px;
-  height: 150px;
-  z-index: 1;
-  transition: all 0.3s ease-in-out;
-  transform: translateY(100px);
-  opacity: 0;
+  display: none;
 }
 
-#painting-info.show {
-  transform: translateY(0);
-  opacity: 1;
+#screen-html-wrapper #menu {
+  display: block;
 }
 
-#painting-info h3 {
-  margin: 0 0 10px 0;
-  font-size: 2em;
-  font-weight: bold;
-  text-transform: uppercase;
+#screen-html-wrapper h1,
+#screen-html-wrapper h3,
+#screen-html-wrapper p,
+#screen-html-wrapper button {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.35), 0 0 18px rgba(255, 255, 255, 0.12);
 }
 
-#painting-info p {
-  margin: 0;
-  font-size: 1.2em;
+#screen-html-wrapper #play_button {
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 255, 255, 0.08);
+}
+
+#screen-html-wrapper, #menu, #about-overlay, #info-panel, #play_button {
+  display: block;
+  pointer-events: auto !important;
 }
 
 #info-panel {

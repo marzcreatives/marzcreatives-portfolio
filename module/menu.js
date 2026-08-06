@@ -1,20 +1,34 @@
+import { triggerPodiumSink, triggerPodiumRise } from "./rendering.js";
+import { switchPodiumScreenTab } from "./podium.js";
+
 export const hideMenu = () => {
-  const menu = document.getElementById('menu');
-  menu.style.display = 'none'; // Hide the menu
+  // Instead of turning off display, initiate the sink physics loop
+  triggerPodiumSink();
 };
 
 export const showMenu = () => {
-  const menu = document.getElementById('menu');
-  menu.style.display = 'block'; // Show the menu
+  // Make sure the primary menu div layout is selected inside the CSS3D stack
+  switchPodiumScreenTab("menu");
+  // Bring the physical podium up out of the floor plane
+  triggerPodiumRise();
 };
 
-// Lock the pointer (controls are activated) and hide the menu when the experience starts
 export const startExperience = (controls) => {
-  controls.lock(); // Lock the pointer (controls are activated)
+  controls.lock();
   hideMenu();
 };
 
 export const setupPlayButton = (controls) => {
-  const playButton = document.getElementById('play_button'); // Get the reference
-  playButton.addEventListener('click', () => startExperience(controls)); // Add the click event listener to the play button to start the experience
+  const playButton = document.getElementById("play_button");
+  if (playButton) {
+    const handlePlay = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      startExperience(controls);
+    };
+
+    playButton.style.pointerEvents = "auto";
+    playButton.addEventListener("click", handlePlay);
+    playButton.addEventListener("pointerdown", handlePlay);
+  }
 };

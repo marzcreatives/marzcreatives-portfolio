@@ -4,21 +4,90 @@ import { getComputerModel } from "./loadComputer.js";
 
 // Save references to toggle display styles over the screens later
 export let podiumUIObjects = {
+  screen: null,
   menu: null,
   about: null,
   info: null,
+  screenMesh: null,
+  computerRef: null,
+  podiumGroupRef: null,
 };
+
+/**
+ * Keeps the CSS overlay aligned with the computer screen mesh as the podium moves.
+ */
+export function syncPodiumScreenOverlay() {
+  const screenObject = podiumUIObjects.screen;
+  const screenMesh = podiumUIObjects.screenMesh;
+  const screenWrapperEl = document.getElementById("screen-html-wrapper");
+
+  if (!screenObject || !screenMesh || !screenWrapperEl) {
+    return;
+  }
+
+  const computer = podiumUIObjects.computerRef;
+  if (computer) {
+    computer.updateMatrixWorld(true);
+  }
+
+  if (podiumUIObjects.podiumGroupRef) {
+    podiumUIObjects.podiumGroupRef.updateMatrixWorld(true);
+  }
+
+  const geometryBox = new THREE.Box3().setFromBufferAttribute(
+    screenMesh.geometry.attributes.position,
+  );
+
+  const worldScale = new THREE.Vector3();
+  screenMesh.getWorldScale(worldScale);
+  const screenWidth = (geometryBox.max.x - geometryBox.min.x) * worldScale.x;
+  const screenHeight = (geometryBox.max.y - geometryBox.min.y) * worldScale.y;
+
+  const targetPosition = new THREE.Vector3();
+  const targetQuaternion = new THREE.Quaternion();
+  const geometryCenter = geometryBox.getCenter(new THREE.Vector3());
+  targetPosition.copy(screenMesh.localToWorld(geometryCenter.clone()));
+  screenMesh.getWorldQuaternion(targetQuaternion);
+
+  const cssPixelsPerWorldUnit = 140;
+  screenWrapperEl.style.width = `${Math.max(240, Math.round(screenWidth * cssPixelsPerWorldUnit))}px`;
+  screenWrapperEl.style.height = `${Math.max(180, Math.round(screenHeight * cssPixelsPerWorldUnit))}px`;
+
+  const offset = new THREE.Vector3(0, 0, 0.002).applyQuaternion(
+    targetQuaternion,
+  );
+  targetPosition.add(offset);
+
+  screenObject.position.copy(targetPosition);
+  screenObject.quaternion.copy(targetQuaternion);
+  screenObject.scale.set(
+    1 / cssPixelsPerWorldUnit,
+    1 / cssPixelsPerWorldUnit,
+    1,
+  );
+}
 
 /**
  * Changes active visible tab within the 3D computer screen geometry layout context
  */
 export function switchPodiumScreenTab(activeTabId) {
-  Object.keys(podiumUIObjects).forEach((key) => {
-    const cssObj = podiumUIObjects[key];
-    if (cssObj) {
-      cssObj.element.style.display = key === activeTabId ? "block" : "none";
+  const tabElements = {
+    menu: document.getElementById("menu"),
+    about: document.getElementById("about-overlay"),
+    info: document.getElementById("info-panel"),
+  };
+
+  Object.keys(tabElements).forEach((key) => {
+    const el = tabElements[key];
+    if (el) {
+      el.style.display = key === activeTabId ? "block" : "none";
     }
   });
+
+  const wrapper = document.getElementById("screen-html-wrapper");
+  if (wrapper) {
+    wrapper.style.display = "block";
+  }
 }
 
 export function createPodium(scene, cssScene) {
@@ -29,6 +98,7 @@ export function createPodium(scene, cssScene) {
   }
 
   const podiumGroup = new THREE.Group();
+  let screenMesh = null;
 
   // 1. Create the Podium Mesh
   const podiumGeometry = new THREE.BoxGeometry(2.5, 1.5, 2.5);
@@ -48,38 +118,50 @@ export function createPodium(scene, cssScene) {
       child.isMesh &&
       (child.name.endsWith("_2") || child.name.endsWith("002"))
     ) {
-      child.material.transparent = true;
-      child.material.opacity = 0.0;
-      child.material.blending = THREE.NoBlending; // Clears backing artifacts
+      screenMesh = child;
+      podiumUIObjects.screenMesh = child;
+      child.visible = false;
     }
   });
 
-  // 4. Wrap HTML DOM elements as CSS3DObjects
-  const menuEl = document.getElementById("menu");
-  const aboutEl = document.getElementById("about-overlay");
-  const infoEl = document.getElementById("info-panel");
+  // 4. Wrap the full monitor panel as a single CSS3DObject
+  const screenWrapperEl = document.getElementById("screen-html-wrapper");
 
-  // Mount them cleanly into our tracking layout dictionary
-  if (menuEl) podiumUIObjects.menu = new CSS3DObject(menuEl);
-  if (aboutEl) podiumUIObjects.about = new CSS3DObject(aboutEl);
-  if (infoEl) podiumUIObjects.info = new CSS3DObject(infoEl);
+  if (screenWrapperEl) {
+    screenWrapperEl.style.display = "block";
+    screenWrapperEl.style.pointerEvents = "auto";
+    screenWrapperEl.style.position = "relative";
+    screenWrapperEl.style.background = "#000000";
+    screenWrapperEl.style.border = "1px solid rgba(255,255,255,0.16)";
+    screenWrapperEl.style.borderRadius = "12px";
+    screenWrapperEl.style.boxShadow =
+      "0 0 30px rgba(0,0,0,0.8), 0 0 60px rgba(255,255,255,0.08)";
+    screenWrapperEl.style.overflow = "hidden";
+    screenWrapperEl.style.transformOrigin = "center center";
+  }
 
-  // Common scaling and positioning offset alignments matching monitor frame
-  Object.keys(podiumUIObjects).forEach((key) => {
-    const cssObj = podiumUIObjects[key];
-    if (!cssObj) return;
+  podiumUIObjects.screen = screenWrapperEl
+    ? new CSS3DObject(screenWrapperEl)
+    : null;
 
-    // Convert pixel scale to fit perfectly on the 3D monitor screen
-    cssObj.scale.set(0.0022, 0.0022, 0.0022);
-    cssObj.position.set(0, 2.18, 0.05); // Aligned cleanly with monitor geometry position
-    cssObj.rotation.set(0, 0, 0);
+  if (podiumUIObjects.screen) {
+    podiumUIObjects.screen.element.style.pointerEvents = "auto";
 
-    // Initial display states
-    cssObj.element.style.display = key === "menu" ? "block" : "none";
+    podiumUIObjects.computerRef = computer;
+    podiumUIObjects.podiumGroupRef = podiumGroup;
 
-    // Add to the dedicated CSS3D scene graph loop
-    cssScene.add(cssObj);
-  });
+    if (screenMesh) {
+      syncPodiumScreenOverlay();
+    } else {
+      podiumUIObjects.screen.position.set(0, 2.18, 0.05);
+      podiumUIObjects.screen.rotation.set(0, 0, 0);
+      podiumUIObjects.screen.scale.set(0.8, 0.6, 1);
+    }
+
+    cssScene.add(podiumUIObjects.screen);
+  }
+
+  switchPodiumScreenTab("menu");
 
   // Position base group container at ground origin
   podiumGroup.position.set(0, 0, 0);
