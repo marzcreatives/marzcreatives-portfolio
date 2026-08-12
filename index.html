@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MarzCreatives</title>
+
+  <script type="module" crossorigin src="/assets/index-BE2RxqSf.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DKAfpnPp.css">
+</head>
+<body>
+ <!-- Main WebGL canvas remains in the background -->
+<canvas id="canvas-container"></canvas>
+
+<!-- Container where Three.js will place the transformed HTML elements -->
+<div id="css3d-container"></div>
+
+<!-- Wrap your screen elements so they can be captured by the CSS3DRenderer -->
+<div id="screen-html-wrapper" style="width: 800px; height: 600px; display: block" >
+  <div id="menu">
+      <h1 class="title"><span class="low">m</span>arzcreat<span class="low">i</span>ves</h1>
+      <div id="content">
+        <p id="welcome">>Welcome to my immersive portfolio.</p>
+        <p id="description">>Designed for exploration. Built around curiosity_</p>
+      </div>
+      <div id="play_button" style="cursor: pointer;">
+       <p>ENTER CONTROL ROOM →</p>
+      </div>
+      <div class="links">
+        <p class="toggle-about" class="secondary-link">[ About Me ]</p>
+        <p class="toggle-controls" class="secondary-link">[ Controls ]</p>
+      </div>
+  </div>
+
+  <div id="about" style="display: none;">
+    <h2>Hi, I'm Maryam!</h2>
+    <div id="about-content">
+      <p>I design products for complex environments and the people who rely on 
+        them. My background in architecture, UX, and frontend engineering has shaped the way I 
+        approach design: balancing structure, usability, and technical reality. I enjoy solving 
+        difficult problems, simplifying workflows, and creating experiences that feel effortless, 
+        even when the systems behind them aren't.</p>
+    </div>
+    <div id="about-tags">
+      <ul>
+        <li>Product Design</li>
+        <li>Accessibility</li>
+        <li>Frontend Engineering</li>
+        <li>Systems Thinking</li>
+      </ul>
+    </div>
+    <div class="links">
+      <p class="toggle-menu" class="secondary-link">[ Return to Menu ]</p>  
+    </div>
+  </div>
+
+  <div id="controls" style="display: none;">
+    <h2>Controls</h2>
+    <div id="controls-content">
+      <table>
+        <tbody>
+          <tr>
+            <td class="key">W/A/S/D</td>
+            <td class="arrow">→</td>
+            <td class="action">Move</td>
+          </tr>
+          <tr>
+            <td class="key">Mouse</td>
+            <td class="arrow">→</td>
+            <td class="action">Look around</td>
+          </tr>
+          <tr>
+            <td class="key">Enter</td>
+            <td class="arrow">→</td>
+            <td class="action">Enter control room</td>
+          </tr>
+          <tr>
+            <td class="key">Esc</td>
+            <td class="arrow">→</td>
+            <td class="action">Return to menu</td>
+          </tr>
+          <tr>
+            <td class="key">Space</td>
+            <td class="arrow">→</td>
+            <td class="action">Lock / unlock view</td>
+          </tr>
+          <tr>
+            <td class="key">R</td>
+            <td class="arrow">→</td>
+            <td class="action">Reload</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="links">
+      <p class="toggle-menu" class="secondary-link">[ Return to Menu ]</p>
+    </div>
+  </div>
+</div>
+
+   
+</body>
+
+
+</html>
