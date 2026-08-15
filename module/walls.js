@@ -12,7 +12,7 @@ export function createWalls(scene, textureLoader) {
     "/assets/concrete_tile_facade_4k/textures/concrete_tile_facade_diff_4k.jpg",
   );
   const displacementTexture = textureLoader.load(
-    "/assets/concrete_tile_facade_4k/textures/concrete_tile_facade_disp_4k.jpg",
+    "/assets/concrete_tile_facade_4k/textures/concrete_tile_facade_disp_4k.png",
   );
 
   diffuseTexture.wrapS = diffuseTexture.wrapT = THREE.RepeatWrapping;
