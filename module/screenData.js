@@ -1,7 +1,7 @@
 export const screenData = [
   {
     imagePath: "noise",
-    position: [10, 3, -24],
+    position: [10, 3, -23.8],
     rotation: [0, 0, 0],
   },
   {
@@ -11,7 +11,7 @@ export const screenData = [
   },
   {
     imagePath: "noise",
-    position: [-1.5, 0.5, -24],
+    position: [-1.5, 0.5, -23.8],
     rotation: [0, 0, 0],
   },
   {
@@ -21,7 +21,7 @@ export const screenData = [
   },
   {
     imagePath: "noise",
-    position: [-12, 1.2, -24.1],
+    position: [-12, 1.2, -23.8],
     rotation: [0, 0, 0],
   },
 ];
