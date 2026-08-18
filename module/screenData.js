@@ -8,6 +8,7 @@ export const screenData = [
     imagePath: "/assets/maia-title.png",
     position: [4, 2, -23.5],
     rotation: [0, 0, 0],
+    link: "https://marzcreatives.github.io/maia/",
   },
   {
     imagePath: "/assets/painting1.jpg",
