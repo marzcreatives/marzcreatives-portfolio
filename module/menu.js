@@ -1,7 +1,10 @@
 import { triggerPodiumSink, triggerPodiumRise } from "./rendering.js";
 import { switchPodiumScreenTab, setScreenWrapperVisible } from "./podium.js";
 
+const viewControls = document.getElementById("view-controls");
+
 export const hideMenu = () => {
+  viewControls.style.display = "block";
   triggerPodiumSink();
   setTimeout(() => {
     setScreenWrapperVisible(false);
@@ -9,6 +12,7 @@ export const hideMenu = () => {
 };
 
 export const showMenu = () => {
+  viewControls.style.display = "none";
   setScreenWrapperVisible(true);
   switchPodiumScreenTab("menu");
   triggerPodiumRise();

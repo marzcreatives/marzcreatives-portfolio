@@ -1,12 +1,86 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { globalUniforms } from "./rendering.js";
+import { globalUniforms, animationState } from "./rendering.js";
 
 const loader = new GLTFLoader();
 const textureLoader = new THREE.TextureLoader();
 
 // Cache the master model so we only download it once from the network
 let masterModel = null;
+
+// Interaction helpers (raycasting) -----------------------------------------
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+const interactiveObjects = [];
+let pointerHoverTarget = null;
+let interactionInitialized = false;
+
+function highlightInstance(instance) {
+  const meshes = instance.userData.screenMeshes || [];
+  meshes.forEach((m) => {
+    if (m.material && typeof m.material.emissiveIntensity === "number") {
+      m.userData._origEmissive =
+        m.userData._origEmissive ?? m.material.emissiveIntensity;
+      m.material.emissiveIntensity = m.userData._origEmissive * 4;
+      m.material.needsUpdate = true;
+    }
+  });
+}
+
+function restoreInstance(instance) {
+  const meshes = instance.userData.screenMeshes || [];
+  meshes.forEach((m) => {
+    if (m.material && typeof m.material.emissiveIntensity === "number") {
+      if (m.userData._origEmissive !== undefined) {
+        m.material.emissiveIntensity = m.userData._origEmissive;
+        m.material.needsUpdate = true;
+      }
+    }
+  });
+}
+
+function onPointerMove(e) {
+  if (!animationState.cameraRef) return;
+  pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(pointer, animationState.cameraRef);
+  const hits = raycaster.intersectObjects(interactiveObjects, true);
+  const hit = hits.length ? hits[0].object.userData.screenParent : null;
+
+  if (hit !== pointerHoverTarget) {
+    if (pointerHoverTarget) restoreInstance(pointerHoverTarget);
+    pointerHoverTarget = hit;
+    if (pointerHoverTarget) highlightInstance(pointerHoverTarget);
+  }
+}
+
+function onPointerDown(e) {
+  if (!animationState.cameraRef) return;
+  pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(pointer, animationState.cameraRef);
+  const hits = raycaster.intersectObjects(interactiveObjects, true);
+  if (hits.length) {
+    const mesh = hits[0].object;
+    const parent = mesh.userData.screenParent;
+    if (parent && parent.userData.link) {
+      // Open the link in a new tab/window
+      try {
+        window.open(parent.userData.link, "_blank");
+      } catch (err) {
+        // Fallback: navigate in same tab
+        window.location.href = parent.userData.link;
+      }
+    }
+  }
+}
+
+function ensureInteraction() {
+  if (interactionInitialized) return;
+  window.addEventListener("pointermove", onPointerMove);
+  window.addEventListener("pointerdown", onPointerDown);
+  interactionInitialized = true;
+}
 
 /**
  * Preloads the monitor GLB model once.
@@ -152,6 +226,7 @@ const noiseMaterial = new THREE.ShaderMaterial({
  * @param {string} props.imagePath - Path to the screen image texture
  * @param {Array} props.position - [x, y, z] coordinates
  * @param {Array} [props.rotation] - Optional [x, y, z] rotation in radians
+ * @param {string} [props.link] - Optional link to the project
  * @returns {THREE.Group} The configured monitor mesh group
  */
 
@@ -163,7 +238,8 @@ export function addScreenImage(scene, props) {
   }
 
   // Destructure with safe default fallbacks for missing properties
-  const { imagePath, position, rotation = [0, 0, 0] } = props;
+  // If `link` is omitted, keep it `null` so clicks won't redirect by default.
+  const { imagePath, position, rotation = [0, 0, 0], link = null } = props;
 
   // Clone the master model so each monitor behaves independently
   const monitorInstance = masterModel.clone();
@@ -196,6 +272,31 @@ export function addScreenImage(scene, props) {
       }
     }
   });
+
+  // Register interactive meshes for hover/click behaviour
+  const screenMeshes = [];
+  monitorInstance.traverse((child) => {
+    if (child.isMesh && child.name.endsWith("_2")) {
+      // mark parent instance on the mesh for quick lookup from raycast hits
+      child.userData.screenParent = monitorInstance;
+      screenMeshes.push(child);
+      // remember original emissive intensity so hover can restore it
+      if (
+        child.material &&
+        typeof child.material.emissiveIntensity === "number"
+      ) {
+        child.userData._origEmissive = child.material.emissiveIntensity;
+      }
+      // Add the mesh to the global interactive list used by raycaster
+      interactiveObjects.push(child);
+    }
+  });
+
+  monitorInstance.userData.screenMeshes = screenMeshes;
+  monitorInstance.userData.link = link;
+
+  // Ensure global pointer/raycaster handlers are attached once
+  ensureInteraction();
 
   monitorInstance.scale.set(0.05, 0.05, 0.05);
 

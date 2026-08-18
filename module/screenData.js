@@ -5,19 +5,20 @@ export const screenData = [
     rotation: [0, 0, 0],
   },
   {
-    imagePath: "/assets/painting1.jpg",
+    imagePath: "/assets/maia-title.png",
     position: [4, 2, -23.5],
     rotation: [0, 0, 0],
   },
   {
-    imagePath: "noise",
+    imagePath: "/assets/painting1.jpg",
     position: [-1.5, 0.5, -23.8],
     rotation: [0, 0, 0],
   },
   {
-    imagePath: "/assets/painting2.jpg",
+    imagePath: "/assets/shoot-it.png",
     position: [-7, 2.5, -23.5],
     rotation: [0, 0, 0],
+    link: "https://marzcreatives.github.io/shoot-it/",
   },
   {
     imagePath: "noise",
